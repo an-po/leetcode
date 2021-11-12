@@ -6,18 +6,16 @@ class Solution(object):
         """
         if strs == []:
             return ''
-        minlen = len(strs[0])
-        for str in strs:
-            if len(str) < minlen:
-                minlen = len(str)
+        max_pref = strs[0]
+        for str in strs[1:]:
+            i = 0
+            min_len = min(len(str), len(max_pref))
+            while (i < min_len) and (str[i] == max_pref[i]):
+                i += 1
+            if i == 0:
+                return ''
+            max_pref = max_pref[:i]
+        return max_pref
 
-        maxpref = ''
-        for i in range(minlen):
-            pref = strs[0][:i+1]
-            for str in strs:
-                if not str.startswith(pref):
-                    break
-            if str.startswith(pref):
-                maxpref = pref
-
-        return maxpref
+s = Solution()
+print(s.longestCommonPrefix(["flower", "flow", "flight", ""]))

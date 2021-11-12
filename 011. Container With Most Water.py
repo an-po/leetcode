@@ -1,14 +1,16 @@
 class Solution:
     def maxArea(self, height):
-        max_v = 0
-        start = 0
-        stop = len(height)-1
-        while start < stop:
-            v = min(height[start], height[stop]) * (stop - start)
-            if v > max_v:
-                max_v = v
-            if height[start] > height[stop]:
-                stop -= 1
-            else:
-                start += 1
-        return int(max_v)
+        i = 0
+        j = len(height) - 1
+        max_area = min(height[i], height[-1]) * (len(height) - 1)
+        while i < j:
+            if height[i] < height[j]:
+                while height[i] < height[j]:
+                    i += 1
+            else
+                j -= 1
+
+        return max_area
+
+c = Solution()
+print(c.maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]))
