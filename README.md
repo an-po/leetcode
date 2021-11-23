@@ -1,2 +1,2 @@
 # leetcode
- www.leetcode.com problem solution
+ www.leetcode.com problem solutions
