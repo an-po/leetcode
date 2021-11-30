@@ -1,2 +1,3 @@
 # leetcode
- www.leetcode.com problem solution
+ LeetCode problem solutions
+ https://leetcode.com/popov_a_v/
