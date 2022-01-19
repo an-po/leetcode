@@ -9,34 +9,53 @@ class ListNode(object):
             if obj is not None:
                 print(obj.val)
                 rec(obj.next)
+
         rec(self)
 
 
 class Solution:
     def mergeKLists(self, lists) -> ListNode:
-        head = None
-        next = None
-        while True:
-            min_node = None
-            for i, node in enumerate(lists):
-                if node is not None:
-                    if min_node is None:
-                        min_node = node
-                        min_index = i
-                    if node.val < min_node.val:
-                        min_node = node
-                        min_index = i
-            if min_node is None:
-                return head
-            if head is None:
-                head = min_node
-                next = head
-                lists[min_index] = lists[min_index].next
+        def merge2lists(lst1, lst2):
+            if lst1 is None:
+                return lst2
+            if lst2 is None:
+                return lst1
+            if lst1.val < lst2.val:
+                lst1.next = merge2lists(lst1.next, lst2)
+                return lst1
             else:
-                next.next = min_node
-                next = next.next
-                lists[min_index] = lists[min_index].next
+                lst2.next = merge2lists(lst1, lst2.next)
+                return lst2
 
+        result = None
+        for lst in lists:
+            result = merge2lists(result, lst)
+
+        return result
+
+
+class Solution3:
+    def mergeKLists(self, lists) -> ListNode:
+        all_nodes = dict()
+        for node in lists:
+            while node is not None:
+                all_nodes[node.val] = all_nodes.get(node.val, 0) + 1
+                node = node.next
+
+        head = None
+
+        for val in range(-10000, 10000 + 1):
+            if val in all_nodes:
+                count = all_nodes[val]
+                while count > 0:
+                    if head is None:
+                        head = ListNode(val)
+                        node = head
+                    else:
+                        node.next = ListNode(val)
+                        node = node.next
+                    count -= 1
+        return head
 
 
 class Solution2:
@@ -56,6 +75,7 @@ class Solution2:
             point = point.next
         return head.next
 
+
 lst = [0] * 3
 lst[0] = ListNode(1)
 lst[0].next = ListNode(4)
@@ -71,4 +91,3 @@ lst[2].next = ListNode(6)
 c = Solution()
 ans = c.mergeKLists(lst)
 ans.on_screen()
-
